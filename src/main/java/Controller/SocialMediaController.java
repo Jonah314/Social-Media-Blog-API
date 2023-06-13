@@ -43,9 +43,8 @@ public class SocialMediaController {
         app.post("/login", this::postUserLoggin);
         app.get("/messages", this::getAllMessagesHandler);
         app.post("/messages", this::postMessagesHandler);
-        
         app.get("/accounts/{account_id}/messages", this::getRAMFUHandler);
-     
+        app.get("/messages/{message_id}", this:: getMBIDHandler);
         return app;
     }
 
@@ -121,4 +120,15 @@ public class SocialMediaController {
         ctx.status(200); 
     }
 
+    public void getMBIDHandler(Context ctx){
+        boolean bool = messageService.RMBIDTest(ctx.pathParam("message_id"));
+        if( bool == true){
+        ctx.json(messageService.retrieveMessageById(ctx.pathParam("message_id")));
+        ctx.status(200);}
+        else {
+            ctx.status(200);
+            System.out.println("no messages for this message_id");
+            return;
+        }
+    }
 }

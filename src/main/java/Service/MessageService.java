@@ -43,4 +43,24 @@ public List<Message> retrieveAllMessageForUser(String string){
     return messageDAO.retrieveAllMessagesForUser(i);
 }
 
+public Message retrieveMessageById(String string){
+    int i = Integer.parseInt(string);
+    if(RMBIDTest(i) ==true){
+    return messageDAO.retrieveMessagesByMessageId(i);}
+    return null;
+}
+public Boolean RMBIDTest(int i){
+    if( messageDAO.MessageITest(i)==true){
+        return true;
+    }
+    return false;
+}
+public Boolean RMBIDTest(String string){
+    int i = Integer.parseInt(string);
+    if( messageDAO.MessageITest(i)==true){
+        return true;
+    }
+    return false;
+}
+
 }

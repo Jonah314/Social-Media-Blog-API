@@ -110,32 +110,50 @@ public List<Message> retrieveAllMessages(){
 
 }
 
-/* 
-public Message retrieveMessagesByMessageId(int message_id){
+
+public Message retrieveMessagesByMessageId(int i){
+    Connection connection = ConnectionUtil.getConnection();
+    Message message= new Message();
+    try{
+        String sql = "SELECT * FROM message WHERE message_id = ?; ";
+        PreparedStatement ps = connection.prepareStatement(sql);
+        ps.setInt(1,i);
+        ResultSet rs = ps.executeQuery();
+        while (rs.next()){
+                message.setMessage_id(rs.getInt("message_id")); 
+                message.setPosted_by(rs.getInt("posted_by")); 
+                message.setMessage_text(rs.getString("message_text")); 
+                message.setTime_posted_epoch(rs.getLong("time_posted_epoch"));
+        }    
+        
+
+    }catch(SQLException e){
+        System.out.println(e.getMessage());
+    }
+    return message;
+}
+
+public Boolean MessageITest(int i){
     Connection connection = ConnectionUtil.getConnection();
     
     try{
         String sql = "SELECT * FROM message WHERE message_id = ?; ";
         PreparedStatement ps = connection.prepareStatement(sql);
-        ps.setInt(1,message_id);
+        ps.setInt(1,i);
         ResultSet rs = ps.executeQuery();
         
-        while(rs.next()){
-            Message message = new Message(
-                rs.getInt("message_id"), 
-                rs.getInt("posted_by"), 
-                rs.getString("message_text"), 
-                rs.getLong("time_posted_epoch"));
-            return message;
-        }
+    if (rs.next()==true){
+        return true;
+    }
+
+        
 
     }catch(SQLException e){
         System.out.println(e.getMessage());
     }
-    return null;
-
+    return false;
 }
-
+/* 
 public Message updateMessage(Message message){
     Connection connection = ConnectionUtil.getConnection();
     
