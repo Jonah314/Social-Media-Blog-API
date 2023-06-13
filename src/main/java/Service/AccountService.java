@@ -41,18 +41,10 @@ public class AccountService {
     if ( accountDAO.usernameTest(account) != true){
         return false;
     }
+
     return true;
    }
 
-   //checking if password and username match
-   public boolean passwordTest(Account account){
-    Account account2 = accountDAO.passwordTest(account);
-    if(
-       account2.getUsername()==account.getUsername()&& 
-       account2.getPassword()==account.getPassword()){
-        return true;
-    }
-    return false;
-   }
+   
 
 }

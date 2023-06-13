@@ -68,11 +68,7 @@ public class SocialMediaController {
         Account account = mapper.readValue(ctx.body(),Account.class);
         Account sucessfullLoggin = accountService.userLoggin(account);
         Boolean userTest = accountService.usernameTest(account);
-        
-        //Boolean passTest = accountService.passwordTest(account);
-
-       
-
+      
         if(userTest == false){
             ctx.status(401);
             System.out.println("usernameTest Failed at json level");

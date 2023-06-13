@@ -79,7 +79,7 @@ public Account userLoggin(Account account){
     return null;
 }
 
-    // username test to verify username is in database
+    // username test to verify username and matching password is in database
     public Boolean usernameTest(Account account){
         System.out.println("Account Dao usernameTest method started");
         Connection connection = ConnectionUtil.getConnection();
@@ -87,9 +87,10 @@ public Account userLoggin(Account account){
         try{
             // sql logic
             
-            String sql = "SELECT * FROM account WHERE username = ?; ";
+            String sql = "SELECT * FROM account WHERE username = ? AND password =?; ";
             PreparedStatement ps = connection.prepareStatement(sql);
             ps.setString(1, account.getUsername());
+            ps.setString(2,account.getPassword());
             
             
             ResultSet rs = ps.executeQuery();
