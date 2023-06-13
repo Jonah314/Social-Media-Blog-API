@@ -10,7 +10,7 @@ import java.util.List;
 
 import Model.Message;
 import Util.ConnectionUtil;
-
+/* 
 public class MessageDAO {
     
     
@@ -30,11 +30,13 @@ public class MessageDAO {
         
         if(pkeyResultSet.next()){
             int generated_message_id = (int) pkeyResultSet.getInt(1);
+
             return new Message(generated_message_id, message.getPosted_by(),message.getMessage_text(), message.getTime_posted_epoch());
         }
 
     }catch(SQLException e){
         System.out.println(e.getMessage());
+        System.out.println(" create message failed in DAO");
     }
     return null;
 }
@@ -61,8 +63,8 @@ public List<Message> retrieveAllMessages(){
     List<Message> messages = new ArrayList<>();
     try{
         String sql = "SELECT * FROM message; ";
-        PreparedStatement ps = connection.prepareStatement(sql);
-        ResultSet rs = ps.executeQuery();
+        PreparedStatement preparedStatement = connection.prepareStatement(sql);
+        ResultSet rs = preparedStatement.executeQuery();
         
         while(rs.next()){
             Message message = new Message(
@@ -79,6 +81,7 @@ public List<Message> retrieveAllMessages(){
     return messages;
 
 }
+*/
 // need to move over to account DAO
 /*  public List<Message> retrieveAllMessagesForUser(){
     Connection connection = ConnectionUtil.getConnection();
@@ -105,7 +108,7 @@ public List<Message> retrieveAllMessages(){
 
 }
 */
-
+/* 
 public Message retrieveMessagesByMessageId(int message_id){
     Connection connection = ConnectionUtil.getConnection();
     
@@ -160,3 +163,4 @@ public Message updateMessage(Message message){
 }
 
 }
+*/
