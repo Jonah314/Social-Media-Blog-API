@@ -81,23 +81,25 @@ public List<Message> retrieveAllMessages(){
 
 }
 */
-// need to move over to account DAO
-/*  public List<Message> retrieveAllMessagesForUser(){
-    Connection connection = ConnectionUtil.getConnection();
+
+    public List<Message> retrieveAllMessagesForUser(int account_id){
+    System.out.println("Message DAO started");
+        Connection connection = ConnectionUtil.getConnection();
     List<Message> messages = new ArrayList<>();
     try{
         String sql = "SELECT * FROM message WHERE posted_by = ?; ";
         PreparedStatement ps = connection.prepareStatement(sql);
-        ps.setInt(1, );
+        ps.setInt(1,account_id);
         ResultSet rs = ps.executeQuery();
         
         while(rs.next()){
-            Message message = new Message(
+            Message message2 = new Message(
                 rs.getInt("message_id"), 
                 rs.getInt("posted_by"), 
                 rs.getString("message_text"), 
                 rs.getLong("time_posted_epoch"));
-                messages.add(message);
+                messages.add(message2);
+                
         }
 
     }catch(SQLException e){
@@ -106,7 +108,7 @@ public List<Message> retrieveAllMessages(){
     return messages;
 
 }
-*/
+
 /* 
 public Message retrieveMessagesByMessageId(int message_id){
     Connection connection = ConnectionUtil.getConnection();

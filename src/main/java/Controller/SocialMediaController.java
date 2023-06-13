@@ -42,8 +42,9 @@ public class SocialMediaController {
         app.post("/register", this::postRegister);
         app.post("/login", this::postUserLoggin);
         //app.get("/messages", this::getAllMessagesHandler);
-        
         app.post("/messages", this::postMessagesHandler);
+        System.out.println("before");
+        app.get("/accounts/{account_id}/messages", this::getRAMFUHandler);
         System.out.println("after");
         return app;
     }
@@ -52,12 +53,8 @@ public class SocialMediaController {
         ObjectMapper mapper = new ObjectMapper();
         Account account = mapper.readValue(ctx.body(), Account.class);
         Account addedAccount = accountService.createAccount(account);
-        
-        
         if( addedAccount == null){
             ctx.status(400);
-            
-            
         }else {
             ctx.json(mapper.writeValueAsString(addedAccount));
             ctx.status(200);
@@ -76,7 +73,6 @@ public class SocialMediaController {
             System.out.println("usernameTest Failed at json level");
             return;
         }
-        
         if(sucessfullLoggin == null){
             ctx.status(400);
             return;
@@ -102,29 +98,27 @@ public class SocialMediaController {
     */
     public void postMessagesHandler(Context ctx) throws JsonProcessingException{
         ObjectMapper mapper = new ObjectMapper();
-        System.out.println("a");
         Message message = mapper.readValue(ctx.body(),Message.class);
-        System.out.println("b");
-        System.out.println(ctx.body()
-        );
+        System.out.println(ctx.body());
         Message addedMessage = messageService.createMessage(message);
         System.out.println("c");
         if( addedMessage == null){
             ctx.status(400);
             System.out.println("postMessagesHandler Failed");
             return;
-            
         }else {
             System.out.println("before2");
-          
             ctx.json(mapper.writeValueAsString(addedMessage));
-        
             System.out.println("after2");
             ctx.status(200);
             System.out.println(" PostMessageHandler went through");
         }
-        
     }
-    
+    public void getRAMFUHandler(Context ctx){
+       System.out.println("handler started");
+        ctx.json(messageService.retrieveAllMessageForUser(ctx.pathParam("account_id")));
+       System.out.println("messages sent");
+        ctx.status(200); 
+    }
 
 }

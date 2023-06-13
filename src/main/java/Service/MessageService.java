@@ -36,4 +36,11 @@ public Message createMessage(Message message){
     return messageDAO.createMessage(message);
 }
 
+public List<Message> retrieveAllMessageForUser(String string){
+   System.out.println("Message service started");
+    int i = Integer.parseInt(string);
+    
+    return messageDAO.retrieveAllMessagesForUser(i);
+}
+
 }
