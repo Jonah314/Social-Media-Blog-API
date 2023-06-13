@@ -15,14 +15,14 @@ public MessageService(){
 public MessageService(MessageDAO messageDAO){
         this.messageDAO = messageDAO;
     }
- /*   
+ 
 public List<Message> getAllMessages(){
         List<Message> message = new ArrayList<Message>();
         message = messageDAO.retrieveAllMessages();
         return message;
     }
 
-    */
+    
 public Message createMessage(Message message){
     System.out.println("createMessage Service started");
     //checking if message is empty

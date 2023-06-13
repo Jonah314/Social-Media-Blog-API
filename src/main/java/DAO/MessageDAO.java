@@ -56,6 +56,7 @@ public Message deleteMessage(Message message){
     }
     return null;
 }
+*/
 
 public List<Message> retrieveAllMessages(){
     Connection connection = ConnectionUtil.getConnection();
@@ -80,7 +81,7 @@ public List<Message> retrieveAllMessages(){
     return messages;
 
 }
-*/
+
 
     public List<Message> retrieveAllMessagesForUser(int account_id){
     System.out.println("Message DAO started");
