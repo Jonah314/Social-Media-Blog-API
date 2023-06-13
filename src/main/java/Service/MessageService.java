@@ -3,9 +3,9 @@ package Service;
 import java.util.ArrayList;
 import java.util.List;
 
-//import DAO.MessageDAO;
+import DAO.MessageDAO;
 import Model.Message;
-/* 
+
 
 public class MessageService {
 public MessageDAO messageDAO;
@@ -15,15 +15,25 @@ public MessageService(){
 public MessageService(MessageDAO messageDAO){
         this.messageDAO = messageDAO;
     }
-    
+ /*   
 public List<Message> getAllMessages(){
         List<Message> message = new ArrayList<Message>();
         message = messageDAO.retrieveAllMessages();
         return message;
     }
+
+    */
 public Message createMessage(Message message){
+    System.out.println("createMessage Service started");
+    //checking if message is empty
+    if(message.getMessage_text().isEmpty()== true){
+        return null;
+    }
+    //checking if string is smaller than 254 characters
+    if(message.getMessage_text().length()>254){
+        return null;
+    }
     return messageDAO.createMessage(message);
 }
 
 }
-*/

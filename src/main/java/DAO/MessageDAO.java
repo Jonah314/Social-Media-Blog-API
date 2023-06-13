@@ -10,15 +10,14 @@ import java.util.List;
 
 import Model.Message;
 import Util.ConnectionUtil;
-/* 
+
 public class MessageDAO {
     
     
     public Message createMessage(Message message){
+        System.out.println("createMessage DAO started");
     Connection connection = ConnectionUtil.getConnection();
     try{
-        // sql logic
-        
         String sql = "INSERT INTO message(posted_by, message_text, time_posted_epoch) VALUES(?,?,?); ";
         PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
         
@@ -40,7 +39,7 @@ public class MessageDAO {
     }
     return null;
 }
-
+/* 
 public Message deleteMessage(Message message){
     Connection connection = ConnectionUtil.getConnection();
     try{
@@ -161,6 +160,5 @@ public Message updateMessage(Message message){
     return null;
 
 }
-
-}
 */
+}

@@ -13,9 +13,9 @@ import io.javalin.http.Context;
 
 
 import Model.Account;
-//import Model.Message;
+import Model.Message;
 import Service.AccountService;
-//import Service.MessageService;
+import Service.MessageService;
 /**
  * TODO: You will need to write your own endpoints and handlers for your controller. The endpoints you will need can be
  * found in readme.md as well as the test cases. You should
@@ -23,11 +23,12 @@ import Service.AccountService;
  */
 public class SocialMediaController {
     AccountService accountService;
-    //MessageService messageService;
+    MessageService messageService;
 
     public SocialMediaController(){
         accountService = new AccountService();
-        //this.messageService=messageService;
+        messageService = new MessageService();
+        
     }
     
     
@@ -41,8 +42,9 @@ public class SocialMediaController {
         app.post("/register", this::postRegister);
         app.post("/login", this::postUserLoggin);
         //app.get("/messages", this::getAllMessagesHandler);
-        //app.post("/messages", this::postMessagesHandler);
         
+        app.post("/messages", this::postMessagesHandler);
+        System.out.println("after");
         return app;
     }
 
@@ -98,16 +100,31 @@ public class SocialMediaController {
         context.status(200);
     }
     */
-   /*  private void postMessagesHandler(Context ctx) throws JsonProcessingException{
+    public void postMessagesHandler(Context ctx) throws JsonProcessingException{
         ObjectMapper mapper = new ObjectMapper();
+        System.out.println("a");
         Message message = mapper.readValue(ctx.body(),Message.class);
+        System.out.println("b");
+        System.out.println(ctx.body()
+        );
         Message addedMessage = messageService.createMessage(message);
-        if( addedMessage != null){
-            ctx.json(mapper.writeValueAsString(addedMessage));
-        }else {
+        System.out.println("c");
+        if( addedMessage == null){
             ctx.status(400);
+            System.out.println("postMessagesHandler Failed");
+            return;
+            
+        }else {
+            System.out.println("before2");
+          
+            ctx.json(mapper.writeValueAsString(addedMessage));
+        
+            System.out.println("after2");
+            ctx.status(200);
+            System.out.println(" PostMessageHandler went through");
         }
+        
     }
-    */
+    
 
 }
