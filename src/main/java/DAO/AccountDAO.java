@@ -9,7 +9,7 @@ import Util.ConnectionUtil;
 
 public class AccountDAO {
     
-//userlogin
+
 
 //userRegistration
 public Account createAccount(Account account){
@@ -43,6 +43,100 @@ public Account createAccount(Account account){
         System.out.println("Account DAO caught exception");
     }
     System.out.println("print statement for return null in Account DAO");
+    return null;
+}
+ //userloggin
+public Account userLoggin(Account account){
+    System.out.println("Account Dao userLoggin method started");
+    Connection connection = ConnectionUtil.getConnection();
+    
+    try{
+        // sql logic
+        
+        String sql = "SELECT * FROM account WHERE username = ? AND password = ? ; ";
+        PreparedStatement ps = connection.prepareStatement(sql);
+        ps.setString(1, account.getUsername());
+        ps.setString(2,account.getPassword());
+        
+        ResultSet rs = ps.executeQuery();
+        while(rs.next()){
+            Account account2 = new Account
+            (rs.getInt("account_id"),
+             rs.getString("username"),
+             rs.getString("password"));
+        
+             return account2;
+        }
+        
+
+
+    }catch(SQLException e){
+        System.out.println(e.getMessage());
+
+        System.out.println("UserLoggin sql caught exception");
+    }
+    System.out.println("print statement for return null in Account DAO");
+    return null;
+}
+
+    // username test to verify username is in database
+    public Boolean usernameTest(Account account){
+        System.out.println("Account Dao usernameTest method started");
+        Connection connection = ConnectionUtil.getConnection();
+        
+        try{
+            // sql logic
+            
+            String sql = "SELECT * FROM account WHERE username = ?; ";
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setString(1, account.getUsername());
+            
+            
+            ResultSet rs = ps.executeQuery();
+            if( rs.next()){
+                System.out.println("usernameTest returned true");
+                return true;
+            }
+            
+    
+    
+        }catch(SQLException e){
+            System.out.println(e.getMessage());
+    
+            System.out.println("UsernameTest sql caught exception");
+        }
+        System.out.println("usernameTest returned false");
+        return false;
+}
+
+public Account passwordTest(Account account){
+    System.out.println("Account Dao passwordTest method started");
+    Connection connection = ConnectionUtil.getConnection();
+    
+    try{
+        // sql logic
+        
+        String sql = "SELECT * FROM account WHERE username = ? AND password = ?; ";
+        PreparedStatement ps = connection.prepareStatement(sql);
+        ps.setString(1, account.getUsername());
+        ps.setString(2, account.getPassword());
+        
+        ResultSet rs = ps.executeQuery();
+        while(rs.next()){
+            Account account2 = new Account
+            (rs.getInt("account_id"),
+             rs.getString("username"),
+             rs.getString("password"));
+        
+             return account2;
+        }
+
+    }catch(SQLException e){
+        System.out.println(e.getMessage());
+
+        System.out.println("passwordTest sql caught exception");
+    }
+    System.out.println("Test returned false");
     return null;
 }
 

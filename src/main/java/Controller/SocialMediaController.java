@@ -2,6 +2,7 @@ package Controller;
 
 
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,7 +39,7 @@ public class SocialMediaController {
     public Javalin startAPI() {
         Javalin app = Javalin.create();
         app.post("/register", this::postRegister);
-
+        app.post("/login", this::postUserLoggin);
         //app.get("/messages", this::getAllMessagesHandler);
         //app.post("/messages", this::postMessagesHandler);
         
@@ -49,9 +50,11 @@ public class SocialMediaController {
         ObjectMapper mapper = new ObjectMapper();
         Account account = mapper.readValue(ctx.body(), Account.class);
         Account addedAccount = accountService.createAccount(account);
-
+        
+        
         if( addedAccount == null){
             ctx.status(400);
+            
             
         }else {
             ctx.json(mapper.writeValueAsString(addedAccount));
@@ -60,7 +63,31 @@ public class SocialMediaController {
         }
     }
 
+    public void postUserLoggin(Context ctx) throws IOException{
+        ObjectMapper mapper = new ObjectMapper();
+        Account account = mapper.readValue(ctx.body(),Account.class);
+        Account sucessfullLoggin = accountService.userLoggin(account);
+        Boolean userTest = accountService.usernameTest(account);
+        
+        //Boolean passTest = accountService.passwordTest(account);
 
+       
+
+        if(userTest == false){
+            ctx.status(401);
+            System.out.println("usernameTest Failed at json level");
+            return;
+        }
+        
+        if(sucessfullLoggin == null){
+            ctx.status(400);
+            return;
+        }else {
+            ctx.json(mapper.writeValueAsString(sucessfullLoggin));
+            ctx.status(200);
+            System.out.println("user loggin in went through at json level");
+        }
+    }
 
 
 

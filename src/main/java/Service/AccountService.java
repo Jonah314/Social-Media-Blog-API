@@ -1,5 +1,7 @@
 package Service;
 
+import java.io.IOException;
+
 import DAO.AccountDAO;
 import Model.Account;
 
@@ -13,7 +15,6 @@ public class AccountService {
     }
 
     // user registration
-    // going to come back and fix registration later, add business logic etc.
    public Account createAccount(Account account){
     if ( account.getPassword().length()<4){
         return null;
@@ -24,6 +25,34 @@ public class AccountService {
     
     System.out.println("account Service initiated");
     return accountDAO.createAccount(account);
+   }
+   // user loging
+   public Account userLoggin(Account account){
+    System.out.println("AccountService innitiaited");
+    
+    if(usernameTest(account)==true){
+    return accountDAO.userLoggin(account);}
+    return null;
+   }
+
+   // checking to see if username is in database
+   public boolean usernameTest(Account  account){
+    System.out.println("user Test started");
+    if ( accountDAO.usernameTest(account) != true){
+        return false;
+    }
+    return true;
+   }
+
+   //checking if password and username match
+   public boolean passwordTest(Account account){
+    Account account2 = accountDAO.passwordTest(account);
+    if(
+       account2.getUsername()==account.getUsername()&& 
+       account2.getPassword()==account.getPassword()){
+        return true;
+    }
+    return false;
    }
 
 }
