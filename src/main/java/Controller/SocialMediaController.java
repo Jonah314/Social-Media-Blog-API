@@ -46,7 +46,9 @@ public class SocialMediaController {
         app.get("/accounts/{account_id}/messages", this::getRAMFUHandler);
         app.get("/messages/{message_id}", this:: getMBIDHandler);
         app.delete("/messages/{message_id}", this:: DeleteHandler);
-        
+        System.out.println("before");
+        app.patch("/messages/{message_id}", this:: patchUpdate);
+        System.out.println("after");
         return app;
     }
 
@@ -146,5 +148,21 @@ public class SocialMediaController {
             ctx.status(200);
             return;
         }
+    }
+    public void patchUpdate(Context ctx) throws JsonProcessingException{
+        ObjectMapper mapper = new ObjectMapper();
+        
+        Message message = mapper.readValue(ctx.body(),Message.class);
+        System.out.println(message);
+        System.out.println(ctx.body());
+        Message updateMessage = messageService.updateMessage(ctx.pathParam("message_id"),message);
+        System.out.println(updateMessage);
+        if(updateMessage ==null){
+            ctx.status(400);
+        }else { 
+            ctx.status(200);
+            ctx.json(mapper.writeValueAsString(updateMessage));
+            System.out.println(" patchUpdateHandler went through");
+        }    
     }
 }

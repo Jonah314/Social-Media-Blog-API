@@ -132,6 +132,28 @@ public Message retrieveMessagesByMessageId(int i){
     return message;
 }
 
+public Message retrieveMessagesByMessageId(Message message){
+    Connection connection = ConnectionUtil.getConnection();
+    Message message2= new Message();
+    try{
+        String sql = "SELECT * FROM message WHERE message_id = ?; ";
+        PreparedStatement ps = connection.prepareStatement(sql);
+        ps.setInt(1,message.getMessage_id());
+        ResultSet rs = ps.executeQuery();
+        while (rs.next()){
+                message2.setMessage_id(rs.getInt("message_id")); 
+                message2.setPosted_by(rs.getInt("posted_by")); 
+                message2.setMessage_text(rs.getString("message_text")); 
+                message2.setTime_posted_epoch(rs.getLong("time_posted_epoch"));
+        }    
+        
+
+    }catch(SQLException e){
+        System.out.println(e.getMessage());
+    }
+    return message2;
+}
+
 public Boolean MessageITest(int i){
     Connection connection = ConnectionUtil.getConnection();
     
@@ -152,33 +174,26 @@ public Boolean MessageITest(int i){
     }
     return false;
 }
-/* 
-public Message updateMessage(Message message){
+
+public void updateMessage(int i,Message message){
     Connection connection = ConnectionUtil.getConnection();
-    
+    System.out.println(" Mesage Dao update service started"  
+    );
     try{
-        String sql = "UPDATE message SET message_text = '?', time_posted_epoch = '?' WHERE message_id = ?; ";
+        String sql = "UPDATE message SET message_text = ? WHERE message_id = ?; ";
         PreparedStatement ps = connection.prepareStatement(sql);
         
         ps.setString(1,message.getMessage_text());
-        ps.setLong(2, message.getTime_posted_epoch());
-        ps.setInt(3,message.getMessage_id());
-        ResultSet rs = ps.executeQuery();
+        ps.setInt(2,i);
+        ps.executeUpdate();
         
-    
-            Message messageUpdate = new Message(
-                rs.getInt("message_id"), 
-                rs.getInt("posted_by"), 
-                rs.getString("message_text"), 
-                rs.getLong("time_posted_epoch"));
-            return messageUpdate;
         
 
     }catch(SQLException e){
         System.out.println(e.getMessage());
     }
-    return null;
+    
 
 }
-*/
+
 }

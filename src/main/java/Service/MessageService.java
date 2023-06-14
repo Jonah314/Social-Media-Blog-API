@@ -69,5 +69,13 @@ public Message deleteMessage(String string){
     messageDAO.deleteMessage(i);
     return deletedMessage;
 }
+public Message updateMessage(String string, Message message){
+    System.out.println("update message service started");
+    int i = Integer.parseInt(string);
+    messageDAO.updateMessage(i,message);
+    Message updatedMessage = messageDAO.retrieveMessagesByMessageId(i);
+    
+    return updatedMessage;
+}
 
 }
