@@ -71,6 +71,14 @@ public Message deleteMessage(String string){
 }
 public Message updateMessage(String string, Message message){
     System.out.println("update message service started");
+    if(message.getMessage_text().isEmpty()== true){
+        return null;
+    }
+    //checking if string is smaller than 254 characters
+    if(message.getMessage_text().length()>254){
+        return null;
+    }
+    
     int i = Integer.parseInt(string);
     messageDAO.updateMessage(i,message);
     Message updatedMessage = messageDAO.retrieveMessagesByMessageId(i);

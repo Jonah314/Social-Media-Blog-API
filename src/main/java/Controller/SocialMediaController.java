@@ -150,19 +150,26 @@ public class SocialMediaController {
         }
     }
     public void patchUpdate(Context ctx) throws JsonProcessingException{
+        boolean bool = messageService.RMBIDTest(ctx.pathParam("message_id"));
         ObjectMapper mapper = new ObjectMapper();
-        
         Message message = mapper.readValue(ctx.body(),Message.class);
         System.out.println(message);
         System.out.println(ctx.body());
         Message updateMessage = messageService.updateMessage(ctx.pathParam("message_id"),message);
         System.out.println(updateMessage);
+       if(bool ==true){
         if(updateMessage ==null){
             ctx.status(400);
         }else { 
             ctx.status(200);
             ctx.json(mapper.writeValueAsString(updateMessage));
             System.out.println(" patchUpdateHandler went through");
-        }    
+        }} else{
+            ctx.status(400);
+            System.out.println("no message found");
+            return;
+        }   
+        
+        
     }
 }
