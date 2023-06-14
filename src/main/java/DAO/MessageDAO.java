@@ -39,24 +39,23 @@ public class MessageDAO {
     }
     return null;
 }
-/* 
-public Message deleteMessage(Message message){
+
+public void deleteMessage(int i){
     Connection connection = ConnectionUtil.getConnection();
     try{
-        // sql logic
         
-        String sql = "DELETE FROM message WHERE message.message_id = ?; ";
-        PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+        String sql = "DELETE FROM message WHERE message_id = ?; ";
+        PreparedStatement ps = connection.prepareStatement(sql);
         
-        ps.setInt(1,message.getMessage_id());
+        ps.setInt(1,i);
         ps.executeUpdate();
 
     }catch(SQLException e){
         System.out.println(e.getMessage());
     }
-    return null;
+    
 }
-*/
+
 
 public List<Message> retrieveAllMessages(){
     Connection connection = ConnectionUtil.getConnection();

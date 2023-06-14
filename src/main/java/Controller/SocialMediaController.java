@@ -45,6 +45,8 @@ public class SocialMediaController {
         app.post("/messages", this::postMessagesHandler);
         app.get("/accounts/{account_id}/messages", this::getRAMFUHandler);
         app.get("/messages/{message_id}", this:: getMBIDHandler);
+        app.delete("/messages/{message_id}", this:: DeleteHandler);
+        
         return app;
     }
 
@@ -128,6 +130,20 @@ public class SocialMediaController {
         else {
             ctx.status(200);
             System.out.println("no messages for this message_id");
+            return;
+        }
+    }
+
+    public void DeleteHandler(Context ctx)throws JsonProcessingException{
+        boolean bool = messageService.RMBIDTest(ctx.pathParam("message_id"));
+        ObjectMapper mapper = new ObjectMapper();
+        
+        if(bool == true){
+        Message addedMessage = messageService.deleteMessage(ctx.pathParam("message_id"));
+        ctx.json(mapper.writeValueAsString(addedMessage));
+        ctx.status(200);}
+        else{
+            ctx.status(200);
             return;
         }
     }

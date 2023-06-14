@@ -62,5 +62,12 @@ public Boolean RMBIDTest(String string){
     }
     return false;
 }
+public Message deleteMessage(String string){
+    int i = Integer.parseInt(string);
+    Message deletedMessage = messageDAO.retrieveMessagesByMessageId(i);
+    
+    messageDAO.deleteMessage(i);
+    return deletedMessage;
+}
 
 }
